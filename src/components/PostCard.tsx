@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Post } from './PostList';
+import { getImageUrl } from '@/utils/image'; // <-- 1. Impor fungsi getImageUrl
 
 interface PostCardProps {
   post: Post;
 }
 
 const PostCard = ({ post }: PostCardProps) => {
-  const imageUrl = post.small_image?.[0]?.url || 'https://via.placeholder.com/400x300'; // fallback jika gambar tidak tersedia
-  const publishedDate = new Date(post.published_at);
+  // 2. Panggil fungsi untuk mendapatkan URL, logikanya sudah tidak ada di sini lagi.
+  const displayUrl = getImageUrl(post);
 
   return (
     <Link
@@ -17,24 +18,19 @@ const PostCard = ({ post }: PostCardProps) => {
     >
       <div className="relative aspect-[4/3]">
         <Image
-          src={imageUrl}
-          alt={post.title || 'Post Image'}
+          src={displayUrl} // Gunakan URL yang sudah diproses
+          alt={post.title}
           fill
           className="object-cover"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          priority // Menambahkan properti priority untuk gambar utama
-          unoptimized // Menggunakan unoptimized untuk gambar besar jika diperlukan
+          unoptimized 
         />
       </div>
-
       <div className="p-4">
         <p className="text-xs text-gray-500 mb-2">
-          {/* Memastikan format tanggal yang lebih aman */}
-          {post.published_at ? publishedDate.toLocaleDateString('id-ID', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          }) : 'Tanggal tidak tersedia'}
+          {new Date(post.published_at).toLocaleDateString('id-ID', {
+            day: 'numeric', month: 'long', year: 'numeric'
+          })}
         </p>
         <h3 className="font-semibold text-base text-gray-800 h-[48px] line-clamp-2">
           {post.title}

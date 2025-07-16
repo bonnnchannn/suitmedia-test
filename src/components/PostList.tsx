@@ -122,19 +122,7 @@ const PostList = () => {
                 <option value="50">50</option>
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                <img src="/down.png" className="w-4 h-4" alt="dropdown" />
               </div>
             </div>
           </div>
@@ -156,19 +144,7 @@ const PostList = () => {
                 <option value="oldest">Oldest</option>
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                <img src="/down.png" className="w-4 h-4" alt="dropdown" />
               </div>
             </div>
           </div>
@@ -176,8 +152,14 @@ const PostList = () => {
       </div>
 
       {isLoading ? (
-        <div className="text-center py-20 text-gray-500">Loading ideas...</div>
-      ) : (
+        <div className="flex flex-col items-center justify-center py-20 text-gray-500">
+        {/* Spinner dengan warna oranye */}
+        <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 border-solid border-orange-500 border-t-transparent rounded-full" role="status">
+            <span className="sr-only">Loading...</span>
+        </div>
+         <p className="mt-4 text-lg text-gray-700">Loading ideas...</p>
+        </div>
+        ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {posts.map((post) => (
