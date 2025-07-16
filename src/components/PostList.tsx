@@ -95,13 +95,17 @@ const PostList = () => {
   };
 
   return (
-    <section id="posts" className="container mx-auto px-6 py-12 bg-white">
+    <section id="posts" className="container mx-auto px-6 py-12 mt-[40px]">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <p className="text-gray-600 text-sm">
+        <div
+          className="text-gray-600 text-sm sticky top-0 z-10 bg-white p-2"
+          style={{ boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
+        >
+          {/* Teks Showing tetap berada di atas */}
           Showing {meta ? (currentPage - 1) * itemsPerPage + 1 : 0} -{" "}
           {meta ? Math.min(currentPage * itemsPerPage, meta.total) : 0} of{" "}
           {meta?.total || 0}
-        </p>
+        </div>
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <label htmlFor="show-per-page" className="text-sm text-gray-600">
@@ -153,13 +157,13 @@ const PostList = () => {
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-20 text-gray-500">
-        {/* Spinner dengan warna oranye */}
-        <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 border-solid border-orange-500 border-t-transparent rounded-full" role="status">
+          {/* Spinner dengan warna oranye */}
+          <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 border-solid border-orange-500 border-t-transparent rounded-full" role="status">
             <span className="sr-only">Loading...</span>
+          </div>
+          <p className="mt-4 text-lg text-gray-700">Loading ideas...</p>
         </div>
-         <p className="mt-4 text-lg text-gray-700">Loading ideas...</p>
-        </div>
-        ) : (
+      ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {posts.map((post) => (

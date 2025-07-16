@@ -21,7 +21,7 @@ const HeroBanner: React.FC = () => {
             className="relative w-full h-[650px] bg-cover bg-center overflow-hidden"
             style={{
                 backgroundImage: "url('/download.jpg')",
-                transform: `translateY(${scrollPosition * 0.1}px)`,
+                transform: `translateY(${scrollPosition * 0.1}px)`, // Efek parallax gambar
             }}
         >
             <div className="absolute inset-0 bg-black opacity-70"></div>
@@ -33,7 +33,7 @@ const HeroBanner: React.FC = () => {
             <div
                 className="relative z-10 flex items-center justify-center flex-col w-full h-full text-center text-white"
                 style={{
-                    transform: `translateY(${scrollPosition * 0.6}px)`,
+                    transform: `translateY(${scrollPosition * 0.6}px)`, // Efek parallax teks
                 }}
             >
                 <h1 className="text-[50px] font-bold">

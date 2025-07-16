@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image"; // Pastikan diimpor
 
 const Header = () => {
-  const [isVisible, setIsVisible] = useState(true); // Menentukan apakah header visible
-  const [lastScrollY, setLastScrollY] = useState(0); // Menyimpan posisi scroll terakhir
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [activeHash, setActiveHash] = useState("");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Untuk menu mobile
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (window.location.hash) {
@@ -17,11 +18,10 @@ const Header = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Header menghilang saat scroll ke bawah, muncul saat scroll ke atas
       if (currentScrollY < 10) {
         setIsVisible(true);
       } else {
-        setIsVisible(currentScrollY < lastScrollY); // Header muncul saat scroll ke atas
+        setIsVisible(currentScrollY < lastScrollY);
       }
 
       setLastScrollY(currentScrollY);
@@ -31,7 +31,6 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  // Auto-detect active section menggunakan Intersection Observer
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const observer = new IntersectionObserver(
@@ -44,7 +43,7 @@ const Header = () => {
       },
       {
         threshold: 0.3,
-        rootMargin: "-80px 0px -80px 0px", // Offset untuk header height
+        rootMargin: "-80px 0px -80px 0px",
       }
     );
 
@@ -64,20 +63,27 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${
-        !isVisible
-          ? "transform translate-y-[-100%]"
-          : "bg-orange-500 bg-opacity-90" // Menambahkan efek transparansi saat muncul
+        !isVisible ? "transform translate-y-[-100%]" : "bg-orange-500 bg-opacity-90"
       }`}
     >
       {/* Logo and Hamburger Menu */}
       <div className="flex justify-between items-center p-4 max-w-screen-xl mx-auto">
-        <div className="text-white text-2xl font-bold">
-          <span>SUIT</span>
-          <span>MEDIA</span>
-        </div>
+        {/* Ganti dengan logo gambar */}
+        <Link href="#home" className="block my-auto">
+          <Image
+            src="/favicon1.png"
+            alt="Suitmedia Logo"
+            width={140}
+            height={40}
+            className="h-10 w-auto object-contain"
+          />
+        </Link>
 
         {/* Hamburger Menu for mobile */}
-        <div className="lg:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+        <div
+          className="lg:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
           <button className="text-white text-3xl">☰</button>
         </div>
 
@@ -118,7 +124,7 @@ const Header = () => {
                 href={link.path}
                 onClick={() => {
                   setActiveHash(link.path);
-                  setIsMobileMenuOpen(false); // Close mobile menu after selecting a link
+                  setIsMobileMenuOpen(false);
                 }}
                 className={`text-white text-lg font-medium ${
                   activeHash === link.path ? "bg-gray-700" : ""

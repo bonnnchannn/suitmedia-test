@@ -13,6 +13,7 @@ const HomePage: NextPage = () => {
         <meta name="description" content="Halaman website dengan fitur modern." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <Header />
       <main>
         <Banner />
