@@ -1,17 +1,29 @@
-// utils/image.ts
-import { Post } from '@/components/PostList';
+// Tipe data Post sesuaikan dengan struktur data dari API Anda
+export type Post = {
+  id: number;
+  title: string;
+  featured_image?: string | null; // Bisa undefined atau null
+  published_at: string;
+};
 
+/**
+ * Fungsi untuk mendapatkan URL gambar post
+ * @param post - Data post yang mungkin memiliki featured_image
+ * @returns URL gambar valid atau fallback image
+ */
 export const getImageUrl = (post: Post): string => {
-  // Cek apakah small_image ada dan memiliki minimal 1 item
-  if (post.small_image && post.small_image.length > 0) {
-    const imageUrl = post.small_image[0]?.url;
-    
-    // Pastikan URL tidak kosong
-    if (imageUrl && imageUrl.trim() !== '') {
-      return imageUrl;
-    }
+  const fallbackUrl = '/favicon.png'; // Pastikan file ini ada di public/images/
+
+  if (!post.featured_image) {
+    return fallbackUrl;
   }
 
-  // Fallback ke placeholder
-  return '/citi.jpg';
+  // Jika URL sudah lengkap (contoh: https://example.com/image.jpg )
+  if (post.featured_image.startsWith('http')) {
+    return post.featured_image;
+  }
+
+  // Jika path relatif, gabungkan dengan base URL atau domain
+  // Contoh: /uploads/image.jpg
+  return post.featured_image;
 };

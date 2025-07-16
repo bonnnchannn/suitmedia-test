@@ -1,15 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Post } from './PostList';
-import { getImageUrl } from '@/utils/image'; // <-- 1. Impor fungsi getImageUrl
+import { getImageUrl } from '../utils/image';
 
 interface PostCardProps {
   post: Post;
 }
 
 const PostCard = ({ post }: PostCardProps) => {
-  // 2. Panggil fungsi untuk mendapatkan URL, logikanya sudah tidak ada di sini lagi.
+  // Gunakan URL dari fungsi getImageUrl
   const displayUrl = getImageUrl(post);
+  
+  // Fallback image URL (sesuaikan sesuai kebutuhan)
+  const fallbackUrl = '/favicon.png'; // <-- ganti dengan path gambar default kamu
 
   return (
     <Link
@@ -18,18 +21,24 @@ const PostCard = ({ post }: PostCardProps) => {
     >
       <div className="relative aspect-[4/3]">
         <Image
-          src={displayUrl} // Gunakan URL yang sudah diproses
+          src={displayUrl}
           alt={post.title}
           fill
           className="object-cover"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          unoptimized 
+          unoptimized
+          onError={(e) => {
+            // Ganti src dengan fallback image jika gagal
+            e.currentTarget.src = fallbackUrl;
+          }}
         />
       </div>
       <div className="p-4">
         <p className="text-xs text-gray-500 mb-2">
           {new Date(post.published_at).toLocaleDateString('id-ID', {
-            day: 'numeric', month: 'long', year: 'numeric'
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
           })}
         </p>
         <h3 className="font-semibold text-base text-gray-800 h-[48px] line-clamp-2">
